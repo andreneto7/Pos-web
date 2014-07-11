@@ -1,0 +1,239 @@
+<html>
+
+<head>
+<meta charset="UTF-8">
+<script src="libs/jquery-2.1.1.js"></script>
+<script src="libs/bootstrap.js"></script>
+<script src="libs/underscore.js"></script>
+<script src="libs/backbone.js"></script>
+<script src="libs/backbone-relational.js"></script>
+<script src="libs/model.js"></script>
+<script src="libs/funcoes.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<title>Trabalho Pos</title>
+</head>
+
+<body>
+<nav class="navbar navbar-default" role="navigation"></div>
+<div class="jumbotron">
+	<div class="panel panel-default">
+		<div id="mensagem" class="alert alert-success" role="alert"></div>
+     </div>
+ </div>
+ 
+<div class="jumbotron" id="incluir">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">CADASTRO DE PEDIDO</h2>
+			</div>
+			<form id="pedido-cadastro" class="form-horizontal" role="form">
+				<br>
+				<fieldset>
+					<div class="form-group">
+						<label for="cpf" class="col-md-1 control-label">CPF:</label>
+						<div class=" col-md-3">
+							<input class="form-control" type="text" name="pedido.cpfsolicitante" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="nome" class="col-md-1 control-label">Nome:</label>
+						<div class=" col-md-9">
+							<input class="form-control" type="text" name="pedido.nomesolicitante" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="endereco" class="col-md-1 control-label">Endereço:</label>
+						<div class=" col-md-9">
+							<input class="form-control" type="text" name="pedido.endereco" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="data" class="col-md-1 control-label">Data:</label>
+						<div class=" col-md-3">
+							<input class="form-control datepicker" type="text" name="pedido.datasolicitacao" />
+						</div>
+					</div>
+                    <div class="form-group">
+                    
+						<label for="total" class="col-md-1 control-label">Total:</label>
+                        <div class=" col-md-3">
+							<input class="form-control" type="text" name="pedido.valor" value="0.0"/>
+                        </div>
+					</div>
+					<div class="col-lg-1 col-lg-offset-1">
+						<button class="btn btn-danger" type="button"
+							id="adicionarItemPedido">Adicionar produto</button>
+					</div>
+                    <div class="col-lg-1 col-lg-offset-1">
+                                                <button class="btn btn-danger" type="button" id="finalizarPedido" onClick="">Finalizar pedido</button>
+                    </div>
+				</fieldset>
+			</form>
+			<div class="panel panel-default">
+				<div class="table-responsive">
+					<table id="produtos" class="table">
+						<thead>
+							<tr>
+								<td>Produto</td>
+								<td>Descricao</td>
+								<td>Valor</td>
+								<td>Quantidade</td>
+								<td>Total</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="dados">
+								<td><select name="item.produto" id="item.produto" class="form-control lista-produtos">
+									<option value="0">==Selecione um produto==</option>
+								</select></td>
+								<td></td>
+								<td class="valor-unitario"><form id="form1" name="form1" method="post" action="">
+								  <input type="text" class="form-control" name="porduto.unitario" id="porduto.unitario" />
+						      </form></td>
+								<td>
+                                	<input name="item.quantidade" type="text"
+									class="form-control" id="item.quantidade" style="max-width: 100px;" value="1"></td>
+								<td class="valor-total"><input type="text" class="form-control" name="produto.total" id="produto.total" /></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+                 
+		</div>
+	</div>
+	
+	<div class="jumbotron" id="listagem">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">LISTAGEM DE PEDIDOS</h2>
+			</div>
+		</div>
+
+
+		<div class="panel panel-default">
+
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container-fluid">
+
+					<div class="navbar-header">
+
+
+						<div class="collapse navbar-collapse"
+							id="bs-example-navbar-collapse-1">
+
+							<form class="navbar-form navbar-left" role="search">
+								<div class="form-group">
+									<input type="text" id="pedido-codigo-busca"
+										class="form-control" placeholder="Informe um código">
+								</div>
+								<button type="submit" class="btn btn-default">Buscar</button>
+							</form>
+
+						</div>
+
+					</div>
+			</nav>
+
+			<div class="">
+				<button class="btn btn-danger" type="button" id="adicionarProduto">Adicionar
+					pedido</button>
+			</div>
+			<br>
+
+			<div class="table-responsive">
+				<table id="pedidos" class="table">
+					<tr class="header">
+						<td>CPF</td>
+						<td>Nome</td>
+						<td>Data</td>
+						<td>Ações</td>
+					</tr>
+					<!--<tr class="data">
+                        <td>555.555.555-32</td>
+                        <td>André Neto</td>
+                        <td>27/07/1985</td>
+                        <td>
+                            <button class="btn btn-danger visualizar" data-pedido="1" type="button">Visualizar</button>
+                        </td>
+                    </tr>-->
+				</table>
+			</div>
+		</div>
+
+
+	</div>
+	</div>
+	<div class="jumbotron" id="visualizar">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">VISUALIZAR PEDIDO</h2>
+			</div>
+			<ul class="nav nav-tabs" id="visualizacao-tab">
+				<li class="active"><a href="#" id="visualizar-pedido">PEDIDO</a>
+				</li>
+				<li><a href="#" id="visualizar-pedido-produtos">PRODUTOS</a></li>
+			</ul>
+			<div id="visualizacao-pedido">
+				<form class="form-horizontal" role="form">
+					<br>
+					<fieldset>
+						<div class="form-group">
+							<label for="cpf-visualizar" class="col-md-1 control-label">CPF:</label>
+							<div class=" col-md-3">
+								<input class="form-control disabled" type="text"
+									name="cpf-visualizar" id="cpf-visualizar" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="nome-viualizar" class="col-md-1 control-label">Nome:</label>
+							<div class=" col-md-9">
+								<input class="form-control disabled" type="text"
+									name="nome-visualizar" id="nome-visualizar" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="endereco-visualizar" class="col-md-1 control-label">Endereço:</label>
+							<div class=" col-md-9">
+								<input class="form-control disabled" type="text"
+									name="endereco-visualizar" id="endereco-visualizar" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="data-visualizar" class="col-md-1 control-label">Data:</label>
+							<div class=" col-md-3">
+								<input class="form-control disabled " type="text"
+									name="data-visualizar" id="data-visualizar" />
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+			<div class="table-responsive" id="visualizacao-produtos">
+				<table id="produtos" class="table">
+					<tr class="header">
+						<td>Produto</td>
+						<td>Descricao</td>
+						<td>Valor</td>
+						<td>Quantidade</td>
+						<td>Total</td>
+					</tr>
+					<tr class="dados">
+						<td>PRODUTO 1</td>
+						<td>DESCRICAO PRODUTO 1</td>
+						<td>1,00</td>
+						<td>1,00</td>
+						<td>1,00</td>
+					</tr>
+				</table>
+			</div>
+
+		</div>
+	</div>
+
+
+</body>
+
+</html>

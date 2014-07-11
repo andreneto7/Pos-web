@@ -1,0 +1,81 @@
+<div class="jumbotron" id="incluir">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">CADASTRO DE PEDIDO</h2>
+			</div>
+			<form id="pedido-cadastro" class="form-horizontal" role="form">
+				<br>
+				<fieldset>
+					<div class="form-group">
+						<label for="cpf" class="col-md-1 control-label">CPF:</label>
+						<div class=" col-md-3">
+							<input class="form-control" type="text" name="pedido.cpfsolicitante" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="nome" class="col-md-1 control-label">Nome:</label>
+						<div class=" col-md-9">
+							<input class="form-control" type="text" name="pedido.nomesolicitante" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="endereco" class="col-md-1 control-label">Endereço:</label>
+						<div class=" col-md-9">
+							<input class="form-control" type="text" name="pedido.endereco" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="data" class="col-md-1 control-label">Data:</label>
+						<div class=" col-md-3">
+							<input class="form-control datepicker" type="text" name="pedido.datasolicitacao" />
+						</div>
+					</div>
+                    <div class="form-group">
+                    
+						<label for="total" class="col-md-1 control-label">Total:</label>
+                        <div class=" col-md-3">
+							<input class="form-control" type="text" name="pedido.valor" value="0.0"/>
+                        </div>
+					</div>
+					<div class="col-lg-1 col-lg-offset-1">
+						<button class="btn btn-danger" type="button"
+							id="adicionarItemPedido">Adicionar produto</button>
+					</div>
+                    <div class="col-lg-1 col-lg-offset-1">
+                                                <button class="btn btn-danger" type="button" id="finalizarPedido" onClick="">Finalizar pedido</button>
+                    </div>
+				</fieldset>
+			</form>
+			<div class="panel panel-default">
+				<div class="table-responsive">
+					<table id="produtos" class="table">
+						<thead>
+							<tr>
+								<td>Produto</td>
+								<td>Descricao</td>
+								<td>Valor</td>
+								<td>Quantidade</td>
+								<td>Total</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="dados">
+								<td><select name="item" id="item-produto" class="form-control lista-produtos">
+									<option value="0">==Selecione um produto==</option>
+								</select></td>
+								<td></td>
+								<td class="valor-unitario"><form id="form1" name="form1" method="post" action="">
+								  <input type="text" class="form-control" name="porduto.unitario" id="porduto.unitario" />
+						      </form></td>
+								<td><input name="item-quantidade" type="text"
+									class="form-control" id="item-quantidade"
+									style="max-width: 100px;" value="1"></td>
+								<td class="valor-total"><input type="text" class="form-control" name="produto.total" id="produto.total" /></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+                 
+		</div>
+	</div>
