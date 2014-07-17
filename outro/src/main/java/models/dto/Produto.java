@@ -1,7 +1,6 @@
 package models.dto;
 
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,11 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
+
 @Entity(name = "produtos")
 @XmlRootElement(name = "produto")
-public class Produto implements Serializable{
+public class Produto{
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     
@@ -27,8 +27,10 @@ public class Produto implements Serializable{
 
     private double valor;
     
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy = "produto")
+    @OneToMany(mappedBy="PK.produto", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<PedidoItens> pedidos;
+    
+
 
     public double getValor() {
         return valor;

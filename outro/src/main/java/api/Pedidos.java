@@ -3,10 +3,10 @@ package api;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -23,6 +23,7 @@ import jee.api.GenericRest;
 import jee.dao.GenericModel;
 
 import utils.Result;
+import utils.transform.Exclude;
 import utils.transform.Render;
 
 
@@ -39,6 +40,21 @@ public class Pedidos extends GenericRest<Pedido> {
     public GenericModel getModel() {
         return dao;
     }
+    
+    @Path("/")
+    @POST
+    public Response save(MultivaluedMap<String, String> form) {
+        
+        Pedido obj = getDtoToSave(form);
+        
+        try {
+            getModel().save(obj);
+            return Response.ok(Render.JSON(Result.OK(obj), new Exclude().exclude("models.dto.Produto.pedidos"))).type("application/json").build();
+        } catch (Exception ex) {
+            return Response.ok(Render.JSON(Result.SYSERROR(ex.getMessage()))).type("application/json").build();
+        }
+    }
+    
 
     @Override
     public Pedido getDtoToSave(MultivaluedMap<String, String> form) {
@@ -56,11 +72,14 @@ public class Pedidos extends GenericRest<Pedido> {
         	PedidoItens item = new PedidoItens();
         	System.out.println("Criando item...");
         	long codproduto = Long.parseLong(lista.get(x));
-        	System.out.println("Obtendo o produto..");
+        	System.out.println("Obtendo o produto.." + codproduto);
         	double quantidade = Double.parseDouble(form.get("item.quantidade").get(x));
+        	System.out.println("Obtendo quantidade..." + quantidade);
         	Produto produto = (Produto)daoproduto.findById(codproduto);
-        	item.setProduto(produto);
-        	item.setPedido(pedido);
+        	System.out.println(produto.toString());
+        	System.out.println(produto.getId());
+        	item.getPK().setProduto(produto);
+        	item.getPK().setPedido(pedido);
         	item.setQuantidade(quantidade);
         	item.setTotal(quantidade * produto.getValor());
         	itenspedido.add(item);

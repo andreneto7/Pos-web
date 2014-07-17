@@ -1,5 +1,6 @@
 package api.config;
 
+
 import api.Pedidos;
 import api.Produtos;
 import javax.ws.rs.ApplicationPath;
@@ -7,6 +8,8 @@ import javax.ws.rs.core.Application;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
+import jee.api.GenericRest;
 
 @ApplicationPath("/api")
 public class ApplicationConfig extends Application {

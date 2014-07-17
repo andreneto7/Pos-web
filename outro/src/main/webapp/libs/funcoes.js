@@ -77,10 +77,20 @@ function salvarPedido(){
 		$("#mensagem").fadeOut();
 	}
 	
-	function sucesso(){
+	function sucessoRequisicao(dados){
+		var erro = dados.Exception;
+		var mensagem = "Gravado com sucesso!";
+		if (erro){
+			mensagem = erro;
+		}
 		$("#mensagem").removeClass();
-		$("#mensagem").text("Salvo com sucesso!");
-		$("#mensagem").addClass("alert alert-success");
+		
+		$("#mensagem").text(mensagem);
+		if (!erro){
+			$("#mensagem").addClass("alert alert-success");
+		}else{
+			$("#mensagem").addClass("alert alert-danger");
+		}
 		$("#mensagem").show("slow");
 		setTimeout(fecharErro, 6000); // 6 segundos
 	}
@@ -88,7 +98,7 @@ function salvarPedido(){
 	var dados =	$("#pedido-cadastro").find(".form-control").serialize();
 	var itens = $("#produtos").find(".form-control").serialize();
 	executarRequisicaoAjax('api/pedidos/', 'POST', dados + '&' + itens, 'json',
-			sucesso, function() {
+			sucessoRequisicao, function() {
 				alert("Erro ao processar requisição.");
 			});
 }

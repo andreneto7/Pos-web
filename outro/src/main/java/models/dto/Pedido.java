@@ -3,7 +3,9 @@ package models.dto;
 import java.util.Date;
 import java.util.List;
 
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,7 +35,7 @@ public class Pedido {
     
     private double valor;
     
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy = "pedido")
+    @OneToMany(mappedBy="PK.pedido", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<PedidoItens> produtos;
     
 
@@ -89,6 +91,10 @@ public class Pedido {
 	public void setProdutos(List<PedidoItens> itens){
 		this.produtos = itens;
 		System.err.println(itens);
+	}
+	
+	public List<PedidoItens> getProdutos(){
+		return produtos;
 	}
 
    }
